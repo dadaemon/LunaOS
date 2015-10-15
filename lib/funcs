@@ -1,0 +1,181 @@
+-- Global functions and variables used in LunaOS
+
+-- Set variables
+local fpsTime = os.clock()
+local fpsTick = 0
+local fpsTicks = 0
+termW = 0
+termH = 0
+local screenOrg = term.current()
+local screen = term.current()
+local consol = term.current()
+
+-- Grab all peripherals
+prph = peripheral.getNames()
+
+-- Grab terminal
+function grabTerminal()
+  screen = peripheral.find("monitor")
+  if screen == nil then
+    print("No monitor detected")
+  else
+    print("Monitor detected, rerouting output")
+    local xw, xh = screen.getSize()
+    screen.setTextScale(0.5)
+    print("[" .. xw .. " x " .. xh .. "]")
+    screenOrg = term.redirect(screen)    
+    clearTerm()
+  end
+
+  termW, termH = term.getSize()
+end
+
+-- Exit function
+function exitLunaOS()
+  clearTerm()
+  term.redirect(screenOrg)
+end
+
+function printTableIdent(tbl, ident)
+  for k, v in pairs(tbl) do
+    if type(v) ~= 'string' then
+      print(ident .. k .. ": not string")
+    else
+      print(ident .. k .. ": " .. v)
+    end
+  end
+end
+
+function printTable(tbl)
+  printTableIdent(tbl, "")
+end
+
+-- Debug print commands
+function clearTerm()
+  term.clear()
+  term.setCursorPos(1,1)
+  term.setBackgroundColor(colors.black)
+  term.setTextColor(colors.white)
+end
+
+function printStatus(text)
+  local x,y = term.getCursorPos()
+  local bg = term.getBackgroundColor()
+  
+  term.setBackgroundColor(colors.red)
+  for t=1,termW do
+    term.setCursorPos(t,1)
+    term.write(" ")
+  end
+  term.setCursorPos(1, 1)  
+  print(text)
+  
+  term.setBackgroundColor(bg)
+  term.setCursorPos(x,y)
+end
+
+function printPeripherals()
+  clearTerm()
+  if prph ~= nil then
+    print("Found " .. #prph .. " peripherals.")
+    if #prph > 0 then
+      for i = 1, #prph do
+        print(i .. " [" .. peripheral.getType(prph[i]) ..
+          "] " .. prph[i])
+      end
+    end
+  else
+    print("No peripherals found!")
+  end
+end
+
+function printMethods(side)
+  clearTerm()
+  local m = peripheral.getMethods(side)
+  print("Showing methods for: " .. side)
+  local i = 0
+  for k, v in pairs(m) do
+    i = i + 1
+    if i % 2 == 0 then
+      print("  " .. k .. " - " .. v)
+    else
+      write(k .. " - " .. v)
+    end
+  end
+end
+
+function printObject(obj)
+  local objx = getAllData(obj)
+  printTable(objx)
+end
+
+function getAllData(t, prevData)
+  local data = prevData or {}
+  
+  for k,v in pairs(t) do
+    data[k] = data[k] or v
+  end
+  
+  local mt = getmetatable(t)
+  if type(mt) ~= 'table' then return data end
+  
+  local index = mt.__index
+  if type(index) ~= 'table' then return data end
+  
+  return getAllData(index, data)
+end
+
+function fps()
+  local x, y = term.getCursorPos()
+  local d = os.clock() - fpsTime
+  
+  if(d >= 1) then
+    fpsTime = os.clock()
+    fpsTick = fpsTicks
+    fpsTicks = 0
+  end
+  
+  fpsTicks = fpsTicks + 1
+  
+  term.setCursorPos(termW - 2, 1)
+  term.write(fpsTick)
+  term.setCursorPos(x, y)
+end
+
+-- File io
+function save(o, file)
+  local file = fs.open(file, "w")
+  file.write(textutils.serialise(o))
+  file.close()
+end
+
+function load(file)
+  local file = fs.open(file, "r")
+  local data = file.readAll()
+  file.close()
+  return textutils.unserialise(data)
+end
+
+-- Color convertion
+function getColor(n)
+  if n == 1 then return "white"
+  elseif n == 2 then return "orange"
+  elseif n == 4 then return "magenta"
+  elseif n == 8 then return "lightBlue"
+  elseif n == 16 then return "yellow"
+  elseif n == 32 then return "lime"
+  elseif n == 64 then return "pink"
+  elseif n == 128 then return "gray"
+  elseif n == 256 then return "lightGray"
+  elseif n == 512 then return "cyan"
+  elseif n == 1024 then return "purple"
+  elseif n == 2048 then return "blue"
+  elseif n == 4096 then return "brown"
+  elseif n == 8192 then return "green"
+  elseif n == 16384 then return "red"
+  elseif n == 32768 then return "black"
+  else return "unknown" end
+end
+
+-- Start
+grabTerminal()

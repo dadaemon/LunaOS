@@ -1,0 +1,251 @@
+-- Updater Information **IGNORE**
+apiVersion = "1.2"
+ 
+function version()
+  return apiVersion
+end
+ 
+-- START OF PROGRAM
+-- Array which holds the buttons
+buttons = {}
+
+function reset()
+  buttons = {}
+  sleep(.5)
+end
+   
+-- Sets what side the monitor is on
+function setMon(side)
+  m = peripheral.wrap(side)
+end
+ 
+-- Determines if a point is inside a rectangle
+function ptinrect(x1, y1, x2, y2)
+ 
+  if (x >= x1) and (x <= x2) and (y >= y1) and (y <= y2) then
+    return true
+  else
+    return false
+  end
+ 
+end
+ 
+-- Prints text in the centre of a button
+function cPrint(button)
+ 
+  butWidth1 = buttons[button].x2 - buttons[button].x1
+  butHeight = buttons[button].y2 - buttons[button].y1
+ 
+  textX1 = buttons[button].x1 + (butWidth1/2)
+  textX = (textX1 - (string.len(buttons[button].label)/2))
+ 
+  m.setCursorPos(textX + 1, buttons[button].y1 + (butHeight/2))
+ 
+  -- Set text color to the button-specific color
+  m.setTextColor(buttons[button].textColor)
+ 
+  m.write(buttons[button].label)
+ 
+  -- Reset text color
+  m.setTextColor(colors.white)
+ 
+end
+ 
+ 
+-- Adds a button to the array
+function add(butName, butLabel, butMode, butX1, butY1, butX2, butY2, butColor, butSecColor, butTextColor, butFunc)
+  table.insert(buttons, {
+    name = butName,
+    label = butLabel,
+    x1 = butX1,
+    y1 = butY1,
+    x2 = butX2,
+    y2 = butY2,
+    color = butColor,
+    secColor = butSecColor,
+    textColor = butTextColor,
+    func = butFunc,
+    mode = butMode,
+    toggled = ""
+  })
+end
+ 
+-- Sets the toggled state of a button on "toggle" mode
+function setState(butName, state)
+  for i = 1, #buttons do
+    if buttons[i].name == butName then
+      buttons[i].toggled = state
+    end
+  end
+end
+ 
+-- Allows a program to get the state of a button
+function getState(butName)
+  for i = 1, #buttons do
+    if buttons[i].name == butName then
+      return buttons[i].toggled
+    end
+  end
+end
+ 
+-- Makes a button flash between two colors
+function flash(button)
+ 
+  --Draw the button in its secondary color
+  m.setBackgroundColor(buttons[button].secColor)
+  for y = buttons[button].y1, buttons[button].y2 do
+    for x = buttons[button].x1, buttons[button].x2 do
+      m.setCursorPos(x, y)
+      m.write(" ")  
+    end
+  end
+ 
+  cPrint(button)
+  sleep(0.15)
+ 
+  -- Draws the button in its primary color once again
+  m.setBackgroundColor(buttons[button].color)
+  for y = buttons[button].y1, buttons[button].y2 do
+    for x = buttons[button].x1, buttons[button].x2 do
+    m.setCursorPos(x, y)
+    m.write(" ")
+    end
+  end
+ 
+  cPrint(button)
+  m.setBackgroundColor(colors.black)
+ 
+end
+ 
+-- Toggles the button on or off depending on the variable in the array
+function toggle(button)
+ 
+  -- If the button is on, turn it off
+  if buttons[button].toggled == true then
+ 
+    m.setBackgroundColor(buttons[button].secColor)
+       
+    for y = buttons[button].y1, buttons[button].y2 do
+      for x = buttons[button].x1, buttons[button].x2 do
+        m.setCursorPos(x, y)
+        m.write(" ")
+      end
+    end
+   
+    cPrint(button)
+   
+    buttons[button].toggled = false
+    m.setBackgroundColor(colors.black)
+ 
+ 
+   
+  -- If the button is off, turn it on
+  elseif buttons[button].toggled == false then
+   
+    m.setBackgroundColor(buttons[button].color)
+   
+    for y = buttons[button].y1, buttons[button].y2 do
+      for x = buttons[button].x1, buttons[button].x2 do
+        m.setCursorPos(x, y)
+        m.write(" ")
+      end
+    end
+   
+    cPrint(button)
+   
+    buttons[button].toggled = true
+    m.setBackgroundColor(colors.black)
+   
+  else
+    error("You have not defined the state of the "..buttons[button].name.." button.")
+  end
+ 
+end
+ 
+-- Draws the buttons on the screen
+function draw()
+ 
+  m.clear()
+ 
+  for button = 1, #buttons do
+    if buttons[button].mode == "flash" then
+      -- Sets the color of the button
+      m.setBackgroundColor(buttons[button].color)
+   
+      -- Draws the button
+      for y = buttons[button].y1, buttons[button].y2 do
+        for x = buttons[button].x1, buttons[button].x2 do
+          m.setCursorPos(x, y)
+          m.write(" ")
+        end
+      end
+     
+      cPrint(button)
+     
+      -- Resets the background color
+      m.setBackgroundColor(colors.black)
+     
+    elseif buttons[button].mode == "toggle" then
+   
+      if buttons[button].toggled == true then
+       
+        m.setBackgroundColor(buttons[button].color)
+       
+        for y = buttons[button].y1, buttons[button].y2 do
+          for x = buttons[button].x1, buttons[button].x2 do
+            m.setCursorPos(x, y)
+            m.write(" ")
+          end
+        end
+       
+        cPrint(button)
+       
+        m.setBackgroundColor(colors.black)
+       
+      elseif buttons[button].toggled == false then
+       
+        m.setBackgroundColor(buttons[button].secColor)
+     
+        for y = buttons[button].y1, buttons[button].y2 do
+          for x = buttons[button].x1, buttons[button].x2 do
+            m.setCursorPos(x, y)
+            m.write(" ")
+          end
+        end
+       
+        cPrint(button)
+       
+        m.setBackgroundColor(colors.black)
+       
+      else
+        error("You have not defined a mode for this button.")
+      end
+    end
+  end
+end
+ 
+-- Waits for a touch on an adjacent advanced monitor and responds accordingly
+function check()
+ 
+  event, side, x, y = os.pullEvent("monitor_touch")
+ 
+  -- Match it to a button and execute the function
+  for button = 1, #buttons do
+    --print("Found " .. #buttons .. " buttons")
+    --funcs.printTable(buttons)
+    if ptinrect(buttons[button].x1, buttons[button].y1, buttons[button].x2, buttons[button].y2) then
+     
+      if buttons[button].mode == "flash" then
+        flash(button)
+      elseif buttons[button].mode == "toggle" then
+        toggle(button)
+      else
+        error("You have not defined a mode for this button.")
+      end
+ 
+      buttons[button].func()
+           
+    end
+  end
+ 
+end

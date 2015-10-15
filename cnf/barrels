@@ -1,0 +1,207 @@
+{
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_2",
+    item = "Mystical Gray Petal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_3",
+    item = "Mystical Orange Petal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_4",
+    item = "Mystical Yellow Petal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_5",
+    item = "Mystical Pink Petal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_1",
+    item = "Mystical Magenta Petal",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_16",
+    item = "Mystical White Petal",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_15",
+    item = "Mystical Light Blue Petal",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_14",
+    item = "Mystical Lime Petal",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_13",
+    item = "Mystical Light Gray Petal",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_12",
+    item = "Mystical Purple Petal",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_11",
+    item = "Mystical Brown Petal",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_10",
+    item = "Mystical Red Petal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_9",
+    item = "Mystical Black Petal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_8",
+    item = "Mystical Green Petal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_7",
+    item = "Mystical Blue Petal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_6",
+    item = "Mystical Cyan Petal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_17",
+    item = "Seeds",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_18",
+    item = "Mystical Gray Petal",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_19",
+    item = "Manasteel Ingot",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_32",
+    item = "Nether Brick",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_30",
+    item = "Block of Coal",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_34",
+    item = "Redstone Root",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_33",
+    item = "Cake",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_31",
+    item = "Stone",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_25",
+    item = "Diamond",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_24",
+    item = "Slimeball",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_29",
+    item = "Bone Meal",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_27",
+    item = "Sugar Canes",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_26",
+    item = "Fishing Rod",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_28",
+    item = "Mushroom",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_21",
+    item = "Gunpowder",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_20",
+    item = "Elementium Ingot",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_23",
+    item = "Pixie Dust",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_22",
+    item = "Mana Pearl",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_38",
+    item = "Livingrock",
+  },
+  {
+    chest = "UP",
+    name = "mcp_mobius_betterbarrel_37",
+    item = "Wheat",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_36",
+    item = "Nether Wart",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_35",
+    item = "Oak Sapling",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_39",
+    item = "Rune of Fire",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_40",
+    item = "Rune of Air",
+  },
+  {
+    chest = "DOWN",
+    name = "mcp_mobius_betterbarrel_41",
+    item = "Rune of Earth",
+  },
+}
