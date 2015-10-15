@@ -21,7 +21,7 @@ end
 
 term.clear()
 term.setCursorPos(1,1)
-local clientVersion = "0.2"
+local clientVersion = "0.3"
 print("LunaOS " .. clientVersion .. " starting up...")
 
 -- Check if there is an update
@@ -61,6 +61,19 @@ os.loadAPI("./LunaOS/libs/button")
 -- Set variables
 local barrelFile = "./LunaOS/cnf/barrels"
 local recipeFile = "./LunaOS/cnf/recipes"
+
+versionRequest = http.get("https://raw.githubusercontent.com/dadaemon/LunaOS/master/recipes.ver")
+recipeVersion = versionRequest.readAll()
+
+lrVersion = recipeFile.version or "0.0"
+
+print("Loaded Recipe version " .. lrVersion)
+print("Latest Recipe version " .. recipeVersion)
+
+if lrVersion ~= recipeVersion then
+	downloadFile("https://raw.githubusercontent.com/dadaemon/LunaOS/master/cnf/recipes", "./LunaOS/cnf/recipes")
+end
+
 local exitLunaOS = false
 local currentPage = "home"
 local monitor = "monitor_6"
