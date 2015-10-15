@@ -21,7 +21,7 @@ end
 
 term.clear()
 term.setCursorPos(1,1)
-local clientVersion = "0.4"
+local clientVersion = "0.5"
 print("LunaOS " .. clientVersion .. " starting up...")
 
 -- Check if there is an update
@@ -747,7 +747,7 @@ loadConfigs()
 versionRequest = http.get("https://raw.githubusercontent.com/dadaemon/LunaOS/master/recipes.ver")
 recipeVersion = versionRequest.readAll()
 
-lrVersion = recipeFile.version or "0.0"
+lrVersion = recipes.version or "0.0"
 
 print("Loaded Recipe version " .. lrVersion)
 print("Latest Recipe version " .. recipeVersion)
