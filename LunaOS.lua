@@ -1,16 +1,16 @@
-function downloadFile(web,local)
-  print("Updating '" .. local .. "'")
+function downloadFile(web,lcal)
+  print("Updating '" .. lcal .. "'")
   
   request = http.get(web)
   data = request.readAll()
   
-  if fs.exists(local) then
-    fs.delete(local)
-    file = fs.open(local, "w")
+  if fs.exists(lcal) then
+    fs.delete(lcal)
+    file = fs.open(lcal, "w")
     file.write(data)
     file.close()
   else
-    file = fs.open(local, "w")
+    file = fs.open(lcal, "w")
     file.write(data)
     file.close()
   end
@@ -21,7 +21,7 @@ end
 
 term.clear()
 term.setCursorPos(1,1)
-local clientVersion = "0.1"
+local clientVersion = "0.2"
 print("LunaOS " .. clientVersion .. " starting up...")
 
 -- Check if there is an update
