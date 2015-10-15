@@ -769,3 +769,5 @@ end
 
 -- End LunaOS
 funcs.exitLunaOS()
+sleep(5)
+os.reboot()
