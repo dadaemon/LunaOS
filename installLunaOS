@@ -1,0 +1,59 @@
+function downloadFile(web,lcal)
+  print("Updating '" .. lcal .. "'")
+  
+  request = http.get(web)
+  data = request.readAll()
+  
+  if fs.exists(lcal) then
+    fs.delete(lcal)
+    file = fs.open(lcal, "w")
+    file.write(data)
+    file.close()
+  else
+    file = fs.open(lcal, "w")
+    file.write(data)
+    file.close()
+  end
+  
+  print("Update complete!")
+end
+
+term.clear()
+term.setCursorPos(1,1)
+local clientVersion = "0.1"
+print("LunaOS Installer " .. clientVersion .. " starting up...")
+
+-- Load files
+--os.loadAPI("./LunaOS/libs/touchpoint")
+os.loadAPI("./LunaOS/libs/funcs")
+os.loadAPI("./LunaOS/libs/button")
+
+-- Set variables
+-- - Exit LunaOS
+local exitLOS = false
+
+-- - Terminal height
+local th = funcs.termH
+
+-- - colors
+local cG = colors.green
+local cR = colors.red
+local cW = colors.white
+
+-- Pages
+-- - Main menu
+function menuMain()
+  -- Initialise buttons
+  funcs.clearButtons()
+  button.add("exit","Exit","flash",1,th-2,15,th,cG,cR,cW,exitLOS)
+  button.add("home","Home","flash",17,th-2,31,th,cG,cR,cW,menuMain)
+end
+
+-- - Exit
+function exitLos()
+  exitLOS = true
+end
+
+while exitLOS == false do
+  menuMain()
+end

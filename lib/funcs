@@ -15,6 +15,14 @@ function clearTerm()
   term.setTextColor(colors.white)
 end
 
+function clearButtons(t)
+  local t = t or term
+  os.unloadAPI("./LunaOS/libs/button")
+  os.loadAPI("./LunaOS/libs/button")
+  button.setMon(t)
+  clearTerm()
+end
+
 -- Debug functions
 function printTableIdent(tbl, ident)
   for k, v in pairs(tbl) do
