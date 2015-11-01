@@ -1,41 +1,21 @@
 -- Global functions and variables used in LunaOS
 
 -- Set variables
-local fpsTime = os.clock()
-local fpsTick = 0
-local fpsTicks = 0
-termW = 0
-termH = 0
-local screenOrg = term.current()
-local screen = term.current()
-local consol = term.current()
 
 -- Grab all peripherals
-prph = peripheral.getNames()
 
 -- Grab terminal
-function grabTerminal()
-  screen = peripheral.find("monitor")
-  if screen == nil then
-    print("No monitor detected")
-  else
-    print("Monitor detected, rerouting output")
-    local xw, xh = screen.getSize()
-    screen.setTextScale(0.5)
-    print("[" .. xw .. " x " .. xh .. "]")
-    screenOrg = term.redirect(screen)    
-    clearTerm()
-  end
 
-  termW, termH = term.getSize()
+-- Terminal functions
+
+function clearTerm()
+  term.clear()
+  term.setCursorPos(1,1)
+  term.setBackgroundColor(colors.black)
+  term.setTextColor(colors.white)
 end
 
--- Exit function
-function exitLunaOS()
-  clearTerm()
-  term.redirect(screenOrg)
-end
-
+-- Debug functions
 function printTableIdent(tbl, ident)
   for k, v in pairs(tbl) do
     if type(v) ~= 'string' then
@@ -51,19 +31,13 @@ function printTable(tbl)
 end
 
 -- Debug print commands
-function clearTerm()
-  term.clear()
-  term.setCursorPos(1,1)
-  term.setBackgroundColor(colors.black)
-  term.setTextColor(colors.white)
-end
-
 function printStatus(text)
   local x,y = term.getCursorPos()
   local bg = term.getBackgroundColor()
   
   term.setBackgroundColor(colors.red)
-  for t=1,termW do
+  local w,h = term.getSize()
+  for t=1,w do
     term.setCursorPos(t,1)
     term.write(" ")
   end
@@ -72,21 +46,6 @@ function printStatus(text)
   
   term.setBackgroundColor(bg)
   term.setCursorPos(x,y)
-end
-
-function printPeripherals()
-  clearTerm()
-  if prph ~= nil then
-    print("Found " .. #prph .. " peripherals.")
-    if #prph > 0 then
-      for i = 1, #prph do
-        print(i .. " [" .. peripheral.getType(prph[i]) ..
-          "] " .. prph[i])
-      end
-    end
-  else
-    print("No peripherals found!")
-  end
 end
 
 function printMethods(side)
@@ -125,23 +84,6 @@ function getAllData(t, prevData)
   return getAllData(index, data)
 end
 
-function fps()
-  local x, y = term.getCursorPos()
-  local d = os.clock() - fpsTime
-  
-  if(d >= 1) then
-    fpsTime = os.clock()
-    fpsTick = fpsTicks
-    fpsTicks = 0
-  end
-  
-  fpsTicks = fpsTicks + 1
-  
-  term.setCursorPos(termW - 2, 1)
-  term.write(fpsTick)
-  term.setCursorPos(x, y)
-end
-
 -- File io
 function save(o, file)
   local file = fs.open(file, "w")
@@ -178,4 +120,3 @@ function getColor(n)
 end
 
 -- Start
-grabTerminal()

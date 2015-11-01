@@ -1,0 +1,77 @@
+function downloadFile(web,lcal)
+  print("Updating '" .. lcal .. "'")
+  
+  request = http.get(web)
+  data = request.readAll()
+  
+  if fs.exists(lcal) then
+    fs.delete(lcal)
+    file = fs.open(lcal, "w")
+    file.write(data)
+    file.close()
+  else
+    file = fs.open(lcal, "w")
+    file.write(data)
+    file.close()
+  end
+  
+  print("Update complete!")
+end
+
+term.clear()
+term.setCursorPos(1,1)
+print("Welcome to the LunaOS downloader.")
+
+label = os.getComputerLabel()
+
+if label == "" then
+	print("Currently this computer has no label set.")
+else
+	print("Current computer label: " .. label)
+	print("Do you want to change this?")
+	print("[Y]es / [N]o")
+	local ok = false
+	while ok == false do
+		local input = read()
+		if input:lower() == "y" then
+			ok = true
+			label = ""
+		elseif input:lower() == "n" then
+			ok = true
+		end
+	end
+end
+
+if label == "" then
+	print("Please enter the name of the computer.")
+	local input = read()
+	print("Changing label to '" .. input .. "'")
+	os.setComputerLabel(input)
+end
+
+-- Check if there is an update
+versionRequest = http.get("https://raw.githubusercontent.com/dadaemon/LunaOS/master/LunaOS.ver")
+serverVersion = versionRequest.readAll()
+
+print("Version "..serverVersion.." is now available. Updating!")
+
+-- lib folder
+if fs.isDir("./LunaOS/lib") == false then
+  fs.makeDir("./LunaOS/lib")
+end
+-- lib/funcs
+downloadFile("https://raw.githubusercontent.com/dadaemon/LunaOS/master/lib/funcs", "./LunaOS/libs/funcs")
+-- lib/button
+downloadFile("https://raw.githubusercontent.com/dadaemon/LunaOS/master/lib/button", "./LunaOS/libs/button")
+ 
+-- cnf folder
+if fs.isDir("./LunaOS/cnf") == false then
+  fs.makeDir("./LunaOS/cnf")
+end
+  
+-- LunaOS.lua
+--downloadFile("https://raw.githubusercontent.com/dadaemon/LunaOS/master/LunaOS.lua", "./LunaOS/LunaOS.lua")
+  
+print("Rebooting computer...")
+sleep(2)
+os.reboot()
